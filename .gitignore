@@ -1,3 +1,7 @@
+# project specific files
+
+# output_images/ has a .gitignore of it's own
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
