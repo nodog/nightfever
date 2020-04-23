@@ -1,8 +1,3 @@
-from math import trunc, sqrt
-from random import random, randrange
-
-from PIL import Image, ImageDraw, ImageColor, ImageFilter
-
 import straws_screen
 import gravity_screen
 import diagon_screen
@@ -11,6 +6,8 @@ import diagon_screen
 WIDTH = 3440
 HEIGHT = 1440
 
-gravity_screen.draw_gravity_screen(WIDTH, HEIGHT)
-#straws_screen.draw_straws_screen(WIDTH, HEIGHT)
-#diagon_screen.draw_diagon_screen(WIDTH, HEIGHT)
+#my_screen = straws_screen.StrawsScreen();
+my_screen = gravity_screen.GravityScreen();
+#my_screen = diagon_screen.DiagonScreen();
+
+my_screen.draw_screen(WIDTH, HEIGHT)

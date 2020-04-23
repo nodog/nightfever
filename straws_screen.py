@@ -1,32 +1,36 @@
 from math import trunc, sqrt
-from random import random, randrange
+from random import random, uniform, randrange
 
 from PIL import Image, ImageDraw, ImageColor, ImageFilter
 
+
 # 3440 x 1440
+class StrawsScreen:
+    """
+    draw an image of straws
+    """
 
-def draw_straws_screen(final_width, final_height):
-    BRIGHT_1 = randrange(5.0, 20.0)
-    BRIGHT_2 = randrange(5.0, 20.0)
-    HUE_1 = randrange(250.0, 360.0)
-    HUE_2 = randrange(250.0, 360.0)
-    XITION_STOP = randrange(45.0, 90.0)
-    XITION_START = randrange(10.0, XITION_STOP - 10.0)
+    def __init__(self):
+        self.bright_1 = uniform(5.0, 20.0)
+        self.bright_2 = uniform(5.0, 20.0)
+        self.hue_1 = uniform(250.0, 360.0)
+        self.hue_2 = uniform(250.0, 360.0)
+        self.xition_stop = uniform(45.0, 90.0)
+        self.xition_start = uniform(10.0, self.xition_stop - 10.0)
 
-    img = Image.new('RGB', (final_width, final_height), color='black')
-    draw = ImageDraw.Draw(img)
-    width = img.size[0]
-    height = img.size[1]
+    def draw_screen(self, width, height):
 
-    perc_complete = 0
-    for j in range(0, height):
-        split_width = (XITION_START + randrange(XITION_STOP - XITION_START))/100.0*width
-        draw.line([(0, j), (split_width, j)], fill="hsl({}, 100%, {}%)".format(HUE_1, BRIGHT_1))
-        draw.line([(split_width, j), (width - 1, j)], fill="hsl({}, 100%, {}%)".format(HUE_2, BRIGHT_2))
-        new_perc_complete = trunc(100 * j / height)
-        if new_perc_complete > perc_complete:
-            perc_complete = new_perc_complete
-            print(perc_complete)
+        img = Image.new('RGB', (width, height), color='black')
+        draw = ImageDraw.Draw(img)
 
-    img.save('output_images/straws-{}_{}_{}_{}_{}_{}.png'.format(BRIGHT_1, BRIGHT_2, HUE_1, HUE_2, XITION_START, \
-                                                                 XITION_STOP))
+        percent_complete = 0
+        for j in range(0, height):
+            split_width = uniform(self.xition_start, self.xition_stop) / 100.0 * width
+            draw.line([(0, j), (split_width, j)], fill="hsl({}, 100%, {}%)".format(self.hue_1, self.bright_1))
+            draw.line([(split_width, j), (width - 1, j)], fill="hsl({}, 100%, {}%)".format(self.hue_2, self.bright_2))
+            new_perc_complete = trunc(100 * j / height)
+            if new_perc_complete > percent_complete:
+                percent_complete = new_perc_complete
+                print(percent_complete)
+
+        img.save(f'output_images/straws-{self.bright_1:.1f}_{self.bright_2:.1f}_{self.hue_1:.1f}_{self.hue_2:.1f}_{self.xition_start:.1f}_{self.xition_stop:.1f}.png')
