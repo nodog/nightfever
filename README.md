@@ -5,5 +5,4 @@ The nightfever.py file is the main file. Currently, you'll need to edit it to ch
 the image drawing algorithm. In order to affect the actual image, you'll need to 
 edit the individual files containing the algorithms. 
 
-There's definitely a better structure
-than this, but I wanted beautiful images first. Beautiful code comes next.
+Output images are stored in the output_images directory.
