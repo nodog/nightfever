@@ -6,8 +6,6 @@ from PIL import Image, ImageDraw, ImageColor, ImageFilter
 
 class VelocityScreen:
 
-
-
     class Zeem:
         def __init__(self, x, y, r):
             self.x = x
@@ -30,14 +28,18 @@ class VelocityScreen:
         self.brightness_max = 40.0
         self.radius = 6
 
-    def __vel_push(self, a_xy, b_xy):
+
+    def __vel_push(self, x, y):
+        velgen_i = x / self.space_btw_velgens
+        velgen_j = y / self.space_btw_velgens
+        v_x = velgen_i
         xd = b_xy.x - a_xy.x
         yd = b_xy.y - a_xy.y
         r = sqrt(xd ** 2 + yd ** 2)
         x_push = xd / r
         y_push = yd / r
         strength = 4.0 / r ** 2
-        return x_push, y_push, strength
+        return x_push, y_push
 
     def draw_screen(self, final_width, final_height):
         img = Image.new('RGB', (final_width*self.supersample, final_height*self.supersample), color='black')
@@ -73,12 +75,14 @@ class VelocityScreen:
                 if hue > 280:
                     hue += 30
                 # # show zeems
-                draw.ellipse([(zeems_xy[i_zeem].x - self.radius, zeems_xy[i_zeem].y - self.radius),
-                              (zeems_xy[i_zeem].x + self.radius, zeems_xy[i_zeem].y + self.radius)],
+                x = zeems_xy[i_zeem].x
+                y = zeems_xy[i_zeem].y
+                draw.ellipse([(x - self.radius, y - self.radius),
+                              (x + self.radius, y + self.radius)],
                              fill="hsl({}, 100%, {}%)".format(hue, brightness))
 
                 # # move zeems once according to velocity values
-                x_push, y_push = self.__vel_push(plorgs_xy[i_plorg], zeems_xy[i_zeem])
+                x_push, y_push = self.__vel_push(x, y, velgens_xy)
                     #print(x_push, y_push, strength)
                     zeems_xy[i_zeem].x += x_push * self.movement / self.n_frames
                     zeems_xy[i_zeem].y += y_push * self.movement / self.n_frames
