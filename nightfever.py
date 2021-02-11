@@ -10,6 +10,10 @@ import diagon_screen
 WIDTH = 2880
 HEIGHT = 1800
 
+# 800 x 800
+# WIDTH = 800
+# HEIGHT = 800
+
 #my_screen = straws_screen.StrawsScreen();
 my_screen = gravity_screen.GravityScreen();
 #my_screen = diagon_screen.DiagonScreen();
